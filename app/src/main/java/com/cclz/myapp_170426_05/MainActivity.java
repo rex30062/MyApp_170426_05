@@ -27,13 +27,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void click1(View v){
+    public void click1(View v){ // 讀
         SQLiteDatabase db;
         db = SQLiteDatabase.openDatabase(outFilename, null, MODE_PRIVATE);
-        Cursor c = db.rawQuery("Select * from phone", null);
+//        Cursor c = db.rawQuery("Select * from phone", null);
+        Cursor c = db.rawQuery("Select * from phone where Name=?", new String[] {"ZZ"});
         c.moveToFirst();
         String n = c.getString(1);
         Toast.makeText(MainActivity.this, n, Toast.LENGTH_SHORT).show();
+        db.close();
+    }
+
+    public void click2(View v){ // 寫
+        SQLiteDatabase db;
+        db = SQLiteDatabase.openDatabase(outFilename, null, MODE_PRIVATE);
+//        db.execSQL("insert into phone (Name, Addr, Tel) Values ('dd', '4545', '5566')");
+        db.execSQL("insert into phone (Name, Addr, Tel) Values (?, ?, ?)", new Object[] {"ZZ", "5555", "5566"});
+        Toast.makeText(MainActivity.this, "finish", Toast.LENGTH_SHORT).show();
         db.close();
     }
 
